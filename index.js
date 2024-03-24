@@ -36,6 +36,7 @@ db.once("open", () => {
 
 
 //related to product
+
 app.get('/products', async (req, res) => {
     const { q } = req.query;
     let products = [];
@@ -108,7 +109,9 @@ app.delete('/delete/:id', async (req, res) => {
     }
 })
 
-app.get('*',(req,res)=>res.sendFile(path.join(__dirname,'client','build','index.html')))
+app.get('*',(req,res)=>{
+    res.send("running");
+})
 
 app.listen(PORT, () => {
     console.log("Listining at 3001 Port");
