@@ -12,7 +12,7 @@ const items = require("./models/item");
 const { v4: uuidv4 } = require("uuid");
 uuidv4();
 app.use(cors());
-app.use(cors({ origin: 'https://ecommerce-client-beige-six.vercel.app/' }));
+app.use(cors({ origin: 'https://ecommerceserver-s6ql.onrender.com' }));
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
