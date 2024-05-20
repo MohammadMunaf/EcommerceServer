@@ -40,15 +40,16 @@ db.once("open", () => {
 //related to product
 
 app.get('/products', async (req, res) => {
-    const { q } = req.query;
+    const { q} = req.query;
+    const limit = parseInt(req.query.limit, 5) || 10;
     let products = [];
     try {
         if (q === "All") {
-            products = await items.find({});
+            products = await items.find({}).limit(limit);
             res.json(products);
         }
         else {
-            products = await items.find({ category: q });
+            products = await items.find({ category: q }).limit(limit).exec();
             res.json(products);
         }
     } catch (e) {
