@@ -41,15 +41,14 @@ db.once("open", () => {
 
 app.get('/products', async (req, res) => {
     const { q} = req.query;
-    const limit = parseInt(req.query.limit, 5) || 10;
     let products = [];
     try {
         if (q === "All") {
-            products = await items.find({}).limit(limit);
+            products = await items.find({}).limit(5);
             res.json(products);
         }
         else {
-            products = await items.find({ category: q }).limit(limit).exec();
+            products = await items.find({ category: q }).limit(5).exec();
             res.json(products);
         }
     } catch (e) {
@@ -112,8 +111,15 @@ app.delete('/delete/:id', async (req, res) => {
     }
 })
 
-app.get('*',(req,res)=>{
-    res.send("running");
+app.get('*',async(req,res)=>{
+    res.send("RUNNING");
+    let products = [];
+    try {
+        products = await items.find({}).limit(5);
+        res.send(products);
+    } catch (e) {
+        console.log(`e-->${e}`);
+    }
 })
 
 app.listen(PORT, () => {
