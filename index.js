@@ -115,8 +115,8 @@ app.get('*',async(req,res)=>{
     res.send("RUNNING");
     let products = [];
     try {
-        products = await items.find({}).limit(5);
-        res.send(products);
+        products = await items.find({});
+        res.json(products);
     } catch (e) {
         console.log(`e-->${e}`);
     }
