@@ -112,7 +112,6 @@ app.delete('/delete/:id', async (req, res) => {
 })
 
 app.get('*',async(req,res)=>{
-    res.send("RUNNING");
     let products = [];
     try {
         products = await items.find({});
