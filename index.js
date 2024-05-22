@@ -11,9 +11,9 @@ const users = require("./models/user");
 const items = require("./models/item");
 const { v4: uuidv4 } = require("uuid");
 uuidv4();
-app.use(cors({ 
+app.use(cors({
     origin: ['https://ecommerce-client-beige-six.vercel.app', 'http://localhost:3000']
-  }));
+}));
 
 
 const bodyParser = require('body-parser');
@@ -40,7 +40,7 @@ db.once("open", () => {
 //related to product
 
 app.get('/products', async (req, res) => {
-    const { q} = req.query;
+    const { q } = req.query;
     let products = [];
     try {
         if (q === "All") {
@@ -48,7 +48,7 @@ app.get('/products', async (req, res) => {
             res.json(products);
         }
         else {
-            products = await items.find({ category: q }).limit(5).exec();
+            products = await items.find({ category: q }).limit(10);
             res.json(products);
         }
     } catch (e) {
@@ -84,7 +84,7 @@ app.post('/upload', async (req, res) => {
 
 app.get('/search', async (req, res) => {
     const { q } = req.query;
-    let product=[];
+    let product = [];
     try {
         product = await items.find({ name: q });
         if (product.length === 0) {
@@ -111,10 +111,10 @@ app.delete('/delete/:id', async (req, res) => {
     }
 })
 
-app.get('*',async(req,res)=>{
+app.get('*', async (req, res) => {
     let products = [];
     try {
-        products = await items.find({});
+        products = await items.find({}).limit(10);
         res.json(products);
     } catch (e) {
         console.log(`e-->${e}`);
