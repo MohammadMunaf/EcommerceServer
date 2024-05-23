@@ -44,7 +44,7 @@ app.get('/products', async (req, res) => {
     let products = [];
     try {
         if (q === "All") {
-            products = await items.find({}).limit(5);
+            products = await items.find({}).limit(8);
             res.json(products);
         }
         else {
