@@ -86,7 +86,7 @@ app.get('/search', async (req, res) => {
     const { q } = req.query;
     let product = [];
     try {
-        product = await items.find({ name: q });
+        product = await items.find({$or:[{ name: q },{category:q}]});
         if (product.length === 0) {
             console.log("not found");
         }
