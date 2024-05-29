@@ -50,7 +50,7 @@ app.get('/products', async (req, res) => {
             res.json(products);
         }
         else {
-            products = await items.find({ category: q }).limit(10);
+            products = await items.find({ category: q });
             res.json(products);
         }
     } catch (e) {
