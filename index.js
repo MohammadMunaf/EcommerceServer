@@ -41,7 +41,7 @@ db.once("open", () => {
 
 app.get('/products', async (req, res) => {
     const { q } = req.query;
-    const { l } = req.query || 10;
+    const { l } = req.query;
     console.log(l);
     let products = [];
     try {
