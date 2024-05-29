@@ -41,10 +41,12 @@ db.once("open", () => {
 
 app.get('/products', async (req, res) => {
     const { q } = req.query;
+    const { l } = req.query || 10;
+    console.log(l);
     let products = [];
     try {
         if (q === "All") {
-            products = await items.find({});
+            products = await items.find({}).limit(l);
             res.json(products);
         }
         else {
@@ -86,7 +88,7 @@ app.get('/search', async (req, res) => {
     const { q } = req.query;
     let product = [];
     try {
-        product = await items.find({$or:[{ name: q },{category:q}]});
+        product = await items.find({ $or: [{ name: q }, { category: q }] });
         if (product.length === 0) {
             console.log("not found");
         }
