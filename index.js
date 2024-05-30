@@ -1,7 +1,6 @@
 if (process.env.Node_ENV !== "production") {
     require('dotenv').config();
 }
-
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -10,6 +9,8 @@ const mongoose = require('mongoose');
 const users = require("./models/user");
 const items = require("./models/item");
 const { v4: uuidv4 } = require("uuid");
+const multer=require('multer');
+const upload=multer({dest:'uploads/'});
 uuidv4();
 app.use(cors({
     origin: ['https://ecommerce-client-beige-six.vercel.app', 'http://localhost:3000']
@@ -73,8 +74,9 @@ app.get('/show/:id', async (req, res) => {
 // app.get('/item/add',(req,res)=>{
 //     //open input page;
 // })
-app.post('/upload', async (req, res) => {
+app.post('/upload', upload.single('file'),async (req, res) => {
     const data = req.body;
+    console.log(req.body);
     let item = new items();
     item.name = data.Name;
     item.description = data.Description;
