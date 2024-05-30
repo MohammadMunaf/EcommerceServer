@@ -83,7 +83,7 @@ app.post('/upload', upload.single('file'),async (req, res) => {
     item.url = data.url;
     item.price = data.price;
     item.category = data.category;
-    await item.save();
+   // await item.save();
 })
 
 app.get('/search', async (req, res) => {
