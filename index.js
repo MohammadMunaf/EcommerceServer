@@ -3,15 +3,12 @@ if (process.env.Node_ENV !== "production") {
 }
 const express = require('express');
 const app = express();
-app.use(express.json())
 const cors = require('cors');
 const PORT = process.env.PORT || 3001;
 const mongoose = require('mongoose');
 const users = require("./models/user");
 const items = require("./models/item");
 const { v4: uuidv4 } = require("uuid");
-const multer=require('multer');
-const upload=multer({dest:'uploads/'});
 uuidv4();
 app.use(cors({
     origin: ['https://ecommerce-client-beige-six.vercel.app', 'http://localhost:3000']
@@ -19,7 +16,6 @@ app.use(cors({
 
 
 const bodyParser = require('body-parser');
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -76,7 +72,7 @@ app.get('/show/:id', async (req, res) => {
 // app.get('/item/add',(req,res)=>{
 //     //open input page;
 // })
-app.post('/upload', upload.single('image'),async (req, res) => {
+app.post('/upload', async (req, res) => {
     const data = req.body;
     let item = new items();
     item.name = data.Name;
