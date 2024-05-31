@@ -81,6 +81,7 @@ app.post('/upload', async (req, res) => {
     item.price = data.price;
     item.category = data.category;
     await item.save();
+    res.json(item);
 })
 
 app.get('/search', async (req, res) => {
