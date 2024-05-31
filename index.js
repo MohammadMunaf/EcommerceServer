@@ -74,7 +74,7 @@ app.get('/show/:id', async (req, res) => {
 // app.get('/item/add',(req,res)=>{
 //     //open input page;
 // })
-app.post('/upload', upload.array('file'),async (req, res) => {
+app.post('/upload', upload.single('file'),async (req, res) => {
     const data = req.body;
     let item = new items();
     item.name = data.Name;
@@ -82,7 +82,7 @@ app.post('/upload', upload.array('file'),async (req, res) => {
     item.url = data.url;
     item.price = data.price;
     item.category = data.category;
-    await item.save();
+    //await item.save();
 })
 
 app.get('/search', async (req, res) => {
