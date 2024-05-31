@@ -3,6 +3,7 @@ if (process.env.Node_ENV !== "production") {
 }
 const express = require('express');
 const app = express();
+app.use(express.json())
 const cors = require('cors');
 const PORT = process.env.PORT || 3001;
 const mongoose = require('mongoose');
@@ -18,6 +19,7 @@ app.use(cors({
 
 
 const bodyParser = require('body-parser');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -74,7 +76,7 @@ app.get('/show/:id', async (req, res) => {
 // app.get('/item/add',(req,res)=>{
 //     //open input page;
 // })
-app.post('/upload', upload.single('url'),async (req, res) => {
+app.post('/upload', upload.single('image'),async (req, res) => {
     const data = req.body;
     let item = new items();
     item.name = data.Name;
