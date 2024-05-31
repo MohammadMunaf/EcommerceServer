@@ -8,10 +8,12 @@ const itemSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    url: {
-        type: String,
-        required: true
-    },
+    images: [
+        {
+            url: String,
+            filename: String
+        }
+    ],
     price: {
         type: Number
     },

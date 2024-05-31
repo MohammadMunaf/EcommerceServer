@@ -1,19 +1,24 @@
-if (process.env.Node_ENV !== "production") {
+if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 const express = require('express');
 const app = express();
+app.use(express.json())
 const cors = require('cors');
 const PORT = process.env.PORT || 3001;
 const mongoose = require('mongoose');
 const users = require("./models/user");
 const items = require("./models/item");
 const { v4: uuidv4 } = require("uuid");
+const multer=require('multer');
+const {storage}=require('./cloudinary');
+const upload=multer({storage});
 uuidv4();
 app.use(cors({
-    origin: ['https://ecommerce-client-beige-six.vercel.app', 'http://localhost:3000']
+    origin: ['https://ecommerce-client-j42v08rim-munafs-projects-7c7651d4.vercel.app', 'http://localhost:3000']
 }));
 
+// https://ecommerce-client-j42v08rim-munafs-projects-7c7651d4.vercel.app
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -41,7 +46,6 @@ db.once("open", () => {
 app.get('/products', async (req, res) => {
     const { q } = req.query;
     const { l } = req.query;
-    console.log(l);
     let products = [];
     try {
         if (q === "All") {
@@ -72,16 +76,17 @@ app.get('/show/:id', async (req, res) => {
 // app.get('/item/add',(req,res)=>{
 //     //open input page;
 // })
-app.post('/upload', async (req, res) => {
-    const data = req.body;
+app.post('/upload', upload.array('images'),async (req, res) => {
+    const data=req.body;
     let item = new items();
+    item.images=req.files.map(f=>({url:f.path,filename:f.filename}));
     item.name = data.Name;
     item.description = data.Description;
-    item.url = data.url;
     item.price = data.price;
     item.category = data.category;
     await item.save();
-    res.json(item);
+    console.log(item);
+    res.json("upload successfull");
 })
 
 app.get('/search', async (req, res) => {
