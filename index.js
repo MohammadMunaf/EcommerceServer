@@ -10,9 +10,10 @@ const mongoose = require('mongoose');
 const users = require("./models/user");
 const items = require("./models/item");
 const { v4: uuidv4 } = require("uuid");
-const multer=require('multer');
-const {storage}=require('./cloudinary');
-const upload=multer({storage});
+const multer = require('multer');
+const { storage } = require('./cloudinary');
+const upload = multer({ storage });
+// const methodOverride=require('medthod-override');
 uuidv4();
 app.use(cors({
     origin: ['https://ecommerce-client-ivory-gamma.vercel.app', 'http://localhost:3000']
@@ -23,6 +24,7 @@ app.use(cors({
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(methodOverride('_method'));
 
 //use the client app
 
@@ -76,10 +78,10 @@ app.get('/show/:id', async (req, res) => {
 // app.get('/item/add',(req,res)=>{
 //     //open input page;
 // })
-app.post('/upload', upload.array('images'),async (req, res) => {
-    const data=req.body;
+app.post('/upload', upload.array('images'), async (req, res) => {
+    const data = req.body;
     let item = new items();
-    item.images=req.files.map(f=>({url:f.path,filename:f.filename}));
+    item.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     item.name = data.Name;
     item.description = data.Description;
     item.price = data.price;
@@ -102,6 +104,21 @@ app.get('/search', async (req, res) => {
         console.log(`Error-->${e}`);
     }
 })
+
+app.get('/edit/:id', async (req, res) => {
+    const Id = req.params.id;
+    //console.log(Id);
+    try {
+        const prod = await items.findById(Id);
+        return res.json(prod);
+    } catch (e) {
+        console.log(`Error-->${e}`);
+    }
+})
+
+// app.patch('/edit/:id',async(req,res)=>{
+
+// })
 
 app.delete('/delete/:id', async (req, res) => {
     const id = req.params.id;
