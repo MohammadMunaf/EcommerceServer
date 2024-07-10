@@ -115,28 +115,28 @@ app.get('/edit/:id', async (req, res) => {
     }
 })
 
-app.patch('/edit/:id',async(req,res)=>{
-    const Id=req.params.id;
-    const {Name,Description,price,category}=req.body;
-    try{
-        const oldProduct=await items.findById(Id);
-        if(oldProduct.Name!==Name){
-            await items.updateOne({_id:Id},{name:Name})
-               
+app.patch('/edit/:id', async (req, res) => {
+    const Id = req.params.id;
+    const { Name, Description, price, category } = req.body;
+    try {
+        const oldProduct = await items.findById(Id);
+        if (oldProduct.Name !== Name) {
+            await items.updateOne({ _id: Id }, { name: Name })
+
         }
-        if(oldProduct.description!==Description){
-            await items.updateOne({_id:Id},{description:Description})
+        if (oldProduct.description !== Description) {
+            await items.updateOne({ _id: Id }, { description: Description })
         }
-        if(oldProduct.price!==price){
-            await items.updateOne({_id:Id},{price:price})
-            
+        if (oldProduct.price !== price) {
+            await items.updateOne({ _id: Id }, { price: price })
+
         }
-        if(oldProduct.category!==category){
-            await items.updateOne({_id:Id},{$set:{category:category}});
+        if (oldProduct.category !== category) {
+            await items.updateOne({ _id: Id }, { $set: { category: category } });
         }
-        const newProduct=await items.findById(Id);
+        const newProduct = await items.findById(Id);
         res.json(newProduct)
-    }catch(e){
+    } catch (e) {
         console.log(`Error-->${e}`);
     }
 })
