@@ -19,8 +19,8 @@ app.use(cors({
     origin: [
         'https://ecommerce-client-ivory-gamma.vercel.app'
         ,'http://localhost:3000'
-        ,'https://ecommerce-client-git-main-munafs-projects-7c7651d4.vercel.app/'
-        ,'https://ecommerce-client-munafs-projects-7c7651d4.vercel.app/']
+        ,'https://ecommerce-client-git-main-munafs-projects-7c7651d4.vercel.app'
+        ,'https://ecommerce-client-munafs-projects-7c7651d4.vercel.app']
 }));
 
 // https://ecommerce-client-j42v08rim-munafs-projects-7c7651d4.vercel.app
